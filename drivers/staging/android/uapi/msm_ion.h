@@ -105,7 +105,6 @@ enum ion_heap_ids {
 
 #define ION_IOC_MSM_MAGIC 'M'
 
-#ifdef __KERNEL__
 struct ion_prefetch_regions {
 	__u64 sizes;
 	__u32 vmid;
@@ -118,26 +117,6 @@ struct ion_prefetch_data {
 	__u32 heap_id;
 	__u32 nr_regions;
 };
-#else
-struct ion_prefetch_regions {
-	union {
-		size_t *sizes;
-		__u64 sizes_u64;
-	};
-	__u32 vmid;
-	__u32 nr_sizes;
-};
-
-struct ion_prefetch_data {
-	__u64 len;
-	union {
-		struct ion_prefetch_regions *regions;
-		__u64 regions_u64;
-	};
-	__u32 heap_id;
-	__u32 nr_regions;
-};
-#endif
 
 #define ION_IOC_PREFETCH		_IOWR(ION_IOC_MSM_MAGIC, 3, \
 						struct ion_prefetch_data)
