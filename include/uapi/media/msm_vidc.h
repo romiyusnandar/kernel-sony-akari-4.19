@@ -105,10 +105,11 @@ struct msm_vidc_input_crop_payload {
 };
 
 struct msm_vidc_misr_info {
-	unsigned int misr_dpb_luma;
-	unsigned int misr_dpb_chroma;
-	unsigned int misr_opb_luma;
-	unsigned int misr_opb_chroma;
+	__u32 misr_set;
+	__u32 misr_dpb_luma[8];
+	__u32 misr_dpb_chroma[8];
+	__u32 misr_opb_luma[8];
+	__u32 misr_opb_chroma[8];
 };
 struct msm_vidc_output_crop_payload {
 	unsigned int size;
@@ -254,8 +255,14 @@ struct msm_vidc_vui_display_info_payload {
 	unsigned int video_full_range_flag;
 	unsigned int color_description_present_flag;
 	unsigned int color_primaries;
-	unsigned int transfer_characteristics;
-	unsigned int matrix_coefficients;
+	union {
+		unsigned int transfer_characteristics;
+		unsigned int transfer_char;
+	};
+	union {
+		unsigned int matrix_coefficients;
+		unsigned int matrix_coeffs;
+	};
 	unsigned int chroma_location_info_present_flag;
 	unsigned int chroma_format_idc;
 	unsigned int separate_color_plane_flag;
