@@ -7124,7 +7124,7 @@ static int clearpad_touch_config_dt(struct clearpad_t *this)
 		LOGW(this, "no firmware_name config\n");
 
 	if (of_property_read_u32(devnode, "flash_on_post_probe", &value))
-		LOGW(this, "no flash_on_post_probe config\n");
+		this->flash.on_post_probe = false;
 	else
 		this->flash.on_post_probe = value ? true : false;
 
