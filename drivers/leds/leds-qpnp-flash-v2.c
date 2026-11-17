@@ -249,6 +249,7 @@ struct flash_node_data {
 	int				ires_ua;
 	int				default_ires_ua;
 	int				max_current;
+	int				default_current_ma;
 	int				current_ma;
 	int				prev_current_ma;
 	u8				duration;
@@ -1345,10 +1346,14 @@ static void qpnp_flash_led_node_set(struct flash_node_data *fnode, int value)
 	struct qpnp_flash_led *led = dev_get_drvdata(&fnode->pdev->dev);
 	u8 pmic_subtype = led->pdata->pmic_rev_id->pmic_subtype;
 
-	if (value <= 0)
+	if (value <= 0) {
 		prgm_current_ma = 0;
-	else if (value < min_ma)
+	} else if (fnode->type == FLASH_LED_TYPE_TORCH && value <= 20) {
+		prgm_current_ma = fnode->default_current_ma ?
+					fnode->default_current_ma : 120;
+	} else if (value < min_ma) {
 		prgm_current_ma = min_ma;
+	}
 
 	fnode->ires_idx = fnode->default_ires_idx;
 	fnode->ires_ua = fnode->default_ires_ua;
@@ -2403,6 +2408,7 @@ static int qpnp_flash_led_parse_each_led_dt(struct qpnp_flash_led *led,
 		if (val > fnode->max_current)
 			val = fnode->max_current;
 		fnode->current_ma = val;
+		fnode->default_current_ma = val;
 		fnode->cdev.brightness = val;
 	} else if (rc != -EINVAL) {
 		pr_err("Unable to read operational current, rc=%d\n", rc);
