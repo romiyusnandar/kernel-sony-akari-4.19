@@ -14231,6 +14231,9 @@ int8_t csr_get_cfg_max_tx_power(struct mac_context *mac, uint32_t ch_freq)
 		return maxTxPwr;
 	}
 
+	if (!cfg_length)
+		return maxTxPwr;
+
 	pCountryInfo = qdf_mem_malloc(cfg_length);
 	if (!pCountryInfo)
 		goto error;
@@ -14254,13 +14257,13 @@ int8_t csr_get_cfg_max_tx_power(struct mac_context *mac, uint32_t ch_freq)
 	while (rem_length >= (sizeof(tSirMacChanInfo))) {
 		maxChannels = pCountryInfo[count].numChannels;
 		maxTxPwr = pCountryInfo[count].maxTxPower;
-		count++;
-		rem_length -= (sizeof(tSirMacChanInfo));
 
 		if (ch_freq >= pCountryInfo[count].first_freq &&
 		    ch_freq < (pCountryInfo[count].first_freq + maxChannels)) {
 			break;
 		}
+		count++;
+		rem_length -= (sizeof(tSirMacChanInfo));
 	}
 
 error:

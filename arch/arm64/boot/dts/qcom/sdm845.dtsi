@@ -541,10 +541,10 @@
 			reg = <0 0x8ab00000 0 0x1400000>;
 		};
 
-		pil_camera_mem: camera_region@8bf00000 {
+		pil_camera_mem: camera_region@97c00000 {
 			compatible = "removed-dma-pool";
 			no-map;
-			reg = <0 0x8bf00000 0 0x500000>;
+			reg = <0 0x97c00000 0 0x500000>;
 		};
 
 		pil_ipa_fw_mem: ips_fw_region@8c400000 {

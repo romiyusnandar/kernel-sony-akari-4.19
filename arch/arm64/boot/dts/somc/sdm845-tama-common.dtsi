@@ -29,7 +29,6 @@
 		reg = <0 0x8ab00000 0 0x1900000>;
 	};
 
-	/delete-node/ camera_region@8bf00000;
 	pil_camera_mem: camera_region@97c00000 {
 		compatible = "removed-dma-pool";
 		no-map;
