@@ -2434,8 +2434,9 @@ static int cam_ife_csid_poll_stop_status(
 			CAM_IFE_CSID_TIMEOUT_SLEEP_US,
 			CAM_IFE_CSID_TIMEOUT_ALL_US);
 		if (rc < 0) {
-			CAM_WARN(CAM_ISP, "CSID:%d res:%d halt failed rc %d (ignoring to prevent session abort)",
+			CAM_WARN(CAM_ISP, "CSID:%d res:%d halt failed rc %d (forcing CSID global reset)",
 				csid_hw->hw_intf->hw_idx, res_id, rc);
+			cam_ife_csid_global_reset(csid_hw);
 			rc = 0;
 		}
 		CAM_DBG(CAM_ISP, "End polling CSID:%d res_id:%d",
