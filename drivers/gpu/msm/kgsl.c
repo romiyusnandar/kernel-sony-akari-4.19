@@ -5266,6 +5266,7 @@ static int _register_device(struct kgsl_device *device)
 	}
 
 	device->dev->dma_mask = &dma_mask;
+	device->dev->coherent_dma_mask = DMA_BIT_MASK(64);
 	arch_setup_dma_ops(device->dev, 0, 0, NULL, false);
 
 	dev_set_drvdata(&device->pdev->dev, device);

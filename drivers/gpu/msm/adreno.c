@@ -1479,6 +1479,13 @@ static int adreno_probe(struct platform_device *pdev)
 
 	device->pdev = pdev;
 
+	status = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+	if (status) {
+		status = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+		if (status)
+			dev_err(&pdev->dev, "adreno: Failed to set DMA mask\n");
+	}
+
 	if (adreno_is_gpu_disabled(adreno_dev)) {
 		dev_err(&pdev->dev, "adreno: GPU is disabled on this device\n");
 		return -ENODEV;
