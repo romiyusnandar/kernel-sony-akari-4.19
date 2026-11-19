@@ -375,7 +375,8 @@ static inline void smp_prepare_cpus(unsigned int maxcpus) { }
 static void __init setup_command_line(char *command_line)
 {
 	const char *force_normal = " androidboot.force_normal_boot=1";
-	bool normal_boot = strstr(boot_command_line, "skip_initramfs") != NULL;
+	bool normal_boot = strstr(boot_command_line, "skip_initramfs") != NULL &&
+			   strstr(boot_command_line, "twrpfastboot=1") == NULL;
 	size_t len = strlen(boot_command_line) + 1 +
 		     (normal_boot ? strlen(force_normal) : 0);
 
