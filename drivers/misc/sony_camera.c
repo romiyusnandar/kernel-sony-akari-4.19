@@ -422,7 +422,7 @@ static long sony_camera_ioctl(struct file *file, unsigned int cmd, unsigned long
 		return 0;
 
 	case SONY_CAMERA_CMD_SET_THERMAL:
-		pr_info("%s: SET_THERMAL\n", sdev->name);
+		pr_debug("%s: SET_THERMAL\n", sdev->name);
 		return 0;
 
 	case SONY_CAMERA_CMD_CLEAR_EVENT:

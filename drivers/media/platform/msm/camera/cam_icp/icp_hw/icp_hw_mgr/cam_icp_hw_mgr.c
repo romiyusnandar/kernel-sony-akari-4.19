@@ -2030,7 +2030,7 @@ static void cam_icp_mgr_process_dbg_buf(unsigned int debug_lvl)
 			timestamp = ((((uint64_t)(dbg_msg->timestamp_hi) << 32)
 				| dbg_msg->timestamp_lo) >> 16);
 			trace_cam_icp_fw_dbg(dbg_buf, timestamp/2);
-			if (!debug_lvl)
+			if (debug_lvl)
 				CAM_INFO(CAM_ICP, "FW_DBG:%s", dbg_buf);
 		}
 		size_processed += (pkt_ptr[ICP_PACKET_SIZE] >>
