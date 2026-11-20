@@ -119,7 +119,7 @@ static enum hrtimer_restart sony_camera_timer_fn(struct hrtimer *timer)
 	if (!sdev || !sdev->is_powered || !sdev->is_streaming)
 		return HRTIMER_NORESTART;
 
-	ktime_get_real_ts64(&ts);
+	ktime_get_boottime_ts64(&ts);
 	sdev->frame_seq++;
 	sdev->current_event.event_id = SONY_CAMERA_EVENT_SOF;
 	sdev->current_event.frame_seq = sdev->frame_seq;
@@ -148,7 +148,7 @@ static irqreturn_t sony_camera_sof_irq_handler(int irq, void *data)
 		return IRQ_HANDLED;
 	sdev->last_sof_kt = now;
 
-	ktime_get_real_ts64(&ts);
+	ktime_get_boottime_ts64(&ts);
 	sdev->frame_seq++;
 	sdev->current_event.event_id = SONY_CAMERA_EVENT_SOF;
 	sdev->current_event.frame_seq = sdev->frame_seq;
