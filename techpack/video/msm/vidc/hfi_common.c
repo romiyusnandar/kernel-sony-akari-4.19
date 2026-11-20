@@ -3792,7 +3792,7 @@ static int __init_bus(struct venus_hfi_device *device)
 		return -EINVAL;
 
 	venus_hfi_for_each_bus(device, bus) {
-		if (!strcmp(bus->mode, "msm-vidc-llcc")) {
+		if (bus->mode && !strcmp(bus->mode, "msm-vidc-llcc")) {
 			if (msm_vidc_syscache_disable) {
 				d_vpr_h("Skipping LLC bus init %s: %s\n",
 				bus->name, bus->mode);

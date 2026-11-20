@@ -6119,6 +6119,8 @@ int msm_vidc_check_session_supported(struct msm_vidc_inst *inst)
 		d_vpr_e("%s: Invalid parameter\n", __func__);
 		return -EINVAL;
 	}
+	if (inst->state < MSM_VIDC_OPEN_DONE)
+		return 0;
 	capability = &inst->capability;
 	hdev = inst->core->device;
 	core = inst->core;
